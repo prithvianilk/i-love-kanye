@@ -9,6 +9,9 @@ module.exports = {
         scoop: "#252525",
         "scoop-hover": "#191919",
       },
+      spacing: {
+        '5/6': "83.33334%"
+      }
     },
   },
   plugins: [],

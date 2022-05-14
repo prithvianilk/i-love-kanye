@@ -27,14 +27,14 @@ const Leaderboard: NextPage<LeaderboardProps> = ({ songs }) => {
         <h1 className="text-center my-10 text-4xl">Leaderboard</h1>
         <table className="w-full text-center mt-4 table-fixed">
           <thead>
-            <tr className="text-2xl">
+            <tr className="text-xl sm:text-2xl">
               <th>Title</th>
               <th>Votes</th>
             </tr>
           </thead>
           <tbody>
             {songs?.map(({ title, votes }, id) => (
-              <tr key={`song-${id}`} className="text-xl">
+              <tr key={`song-${id}`} className="text-md sm:text-xl">
                 <td>{title}</td>
                 <td>{votes}</td>
               </tr>

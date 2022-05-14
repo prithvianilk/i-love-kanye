@@ -20,12 +20,13 @@ const Index: NextPage = () => {
 
   const [isVoteCompleted, setVoteCompleted] = useState<boolean>(false);
   const [results, setResults] = useState<number[]>([]);
+  const [numberOfVotes1, numberOfVotes2] = results;
 
   const onClickSkip = () => {
     Router.reload();
   };
 
-  const resultDisplay =  isVoteCompleted ? "block" : "hidden";
+  const resultDisplay = isVoteCompleted ? "block" : "hidden";
 
   const onClick = (songId: number) => {
     if (!isVoteCompleted) {
@@ -69,27 +70,14 @@ const Index: NextPage = () => {
 
   return (
     <div className="h-screen w-full flex flex-col text-white relative">
-      <h1 className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/2 z-10 italic text-center text-xl sm:text-3xl">
+      <h1
+        className="
+        top-2 -translate-y-0 absolute sm:top-1/4 left-1/2 transform -translate-x-1/2 sm:-translate-y-1/2 w-1/2 z-10 italic text-center text-xl sm:text-3xl
+      "
+      >
         Which is the better Kanye song?
       </h1>
-      <div
-        className={`${resultDisplay} flex justify-evenly items-center absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full z-10 text-2xl`}
-      >
-        <p>
-          {results[0]} Votes
-        </p>
-        <button
-          type="button"
-          className="ml-3 text-center text-xl sm:text-xl text-white bg-scoop hover:bg-scoop-hover focus:outline-none focus:ring-2 focus:ring-gray-300 font-medium rounded-md px-4 py-2 mr-2"
-          onClick={onClickSkip}
-        >
-          Next
-        </button>
-        <p>
-          {results[1]} Votes
-        </p>
-      </div>
-      <div className="flex grow relative">
+      <div className="w-full flex grow relative flex-col sm:flex-row">
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 z-10 italic text-md sm:text-3xl">
           or
         </div>
@@ -100,6 +88,29 @@ const Index: NextPage = () => {
             song={song}
           />
         ))}
+        <h1
+          className={`${resultDisplay} flex justify-evenly items-center absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full z-10 text-lg
+          sm:top-2/3 sm:left-1/4 sm:w-1/4 sm:text-2xl
+          `}
+        >
+          {numberOfVotes1} Votes
+        </h1>
+        <button
+          type="button"
+          className={`${resultDisplay} absolute top-1/2 left-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2 text-center text-xl sm:text-xl text-white bg-scoop hover:bg-scoop-hover focus:outline-none focus:ring-2 focus:ring-gray-300 font-medium rounded-md px-4 py-2
+          sm:top-2/3 sm:left-1/2  
+         `}
+          onClick={onClickSkip}
+        >
+          Next
+        </button>
+        <span
+          className={`${resultDisplay} flex justify-evenly items-center absolute top-5/6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full z-10 text-lg
+          sm:top-2/3 sm:left-3/4 sm:w-1/4 sm:text-2xl
+          `}
+        >
+          {numberOfVotes2} Votes
+        </span>
       </div>
       <footer className="flex justify-center items-center h-12">
         <Link href="/leaderboard">
