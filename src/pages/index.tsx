@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import Router from "next/router";
-import Script from "next/script";
+import { useState } from "react";
 import GithubIcon from "../components/GithubIcon";
 import SongChoice from "../components/SongChoice";
 import { DAY_IN_MS } from "../utils/constants";
@@ -18,19 +18,30 @@ const Index: NextPage = () => {
 
   const voteForSongMutation = trpc.useMutation("vote-for-song");
 
+  const [isVoteCompleted, setVoteCompleted] = useState<boolean>(false);
+  const [results, setResults] = useState<number[]>([]);
+
+  const onClickSkip = () => {
+    Router.reload();
+  };
+
+  const resultDisplay =  isVoteCompleted ? "block" : "hidden";
+
   const onClick = (songId: number) => {
-    voteForSongMutation.mutate(
-      {
-        id: songId,
-        songIds: songChoices?.map(({ id }) => id) as number[],
-      },
-      {
-        onSuccess: (votes) => {
-          console.log(votes);
-          Router.reload();
+    if (!isVoteCompleted) {
+      voteForSongMutation.mutate(
+        {
+          id: songId,
+          songIds: songChoices?.map(({ id }) => id) as number[],
         },
-      }
-    );
+        {
+          onSuccess: (votes) => {
+            setResults(votes);
+            setVoteCompleted(true);
+          },
+        }
+      );
+    }
   };
 
   if (isLoading || !songChoices) {
@@ -59,9 +70,25 @@ const Index: NextPage = () => {
   return (
     <div className="h-screen w-full flex flex-col text-white relative">
       <h1 className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/2 z-10 italic text-center text-xl sm:text-3xl">
-        Answering the most important question.
-        <br /> Which Kanye song is the best?
+        Which is the better Kanye song?
       </h1>
+      <div
+        className={`${resultDisplay} flex justify-evenly items-center absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full z-10 text-2xl`}
+      >
+        <p>
+          {results[0]} Votes
+        </p>
+        <button
+          type="button"
+          className="ml-3 text-center text-xl sm:text-xl text-white bg-scoop hover:bg-scoop-hover focus:outline-none focus:ring-2 focus:ring-gray-300 font-medium rounded-md px-4 py-2 mr-2"
+          onClick={onClickSkip}
+        >
+          Next
+        </button>
+        <p>
+          {results[1]} Votes
+        </p>
+      </div>
       <div className="flex grow relative">
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 z-10 italic text-md sm:text-3xl">
           or
@@ -80,7 +107,6 @@ const Index: NextPage = () => {
         </Link>
         <GithubIcon />
       </footer>
-      <Script async defer src="https://buttons.github.io/buttons.js" />
     </div>
   );
 };

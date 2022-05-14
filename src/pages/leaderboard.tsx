@@ -1,7 +1,6 @@
 import { Song } from "@prisma/client";
 import { GetServerSidePropsContext, NextPage } from "next";
 import Link from "next/link";
-import Script from "next/script";
 import GithubIcon from "../components/GithubIcon";
 import { prisma } from "../utils/prisma";
 
@@ -49,7 +48,6 @@ const Leaderboard: NextPage<LeaderboardProps> = ({ songs }) => {
         </Link>
         <GithubIcon />
       </footer>
-      <Script async defer src="https://buttons.github.io/buttons.js" />
     </div>
   );
 };

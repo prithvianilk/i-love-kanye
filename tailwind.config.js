@@ -4,7 +4,12 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        scoop: "#252525",
+        "scoop-hover": "#191919",
+      },
+    },
   },
   plugins: [],
 };
