@@ -1,7 +1,7 @@
 import * as trpc from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 import { z } from "zod";
-import { prisma } from "../../../../prisma/prisma";
+import { prisma } from "../../../utils/prisma";
 
 const generateSongChoices = async () => {
   const numberOfSongs = await prisma.song.count();
