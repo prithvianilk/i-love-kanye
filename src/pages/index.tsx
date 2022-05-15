@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import Router from "next/router";
 import { useState } from "react";
 import GithubIcon from "../components/GithubIconButton";
 import SongChoice from "../components/SongChoice";
@@ -8,7 +7,11 @@ import Spinner from "../components/Spinner";
 import { trpc } from "../utils/trpc";
 
 const Index: NextPage = () => {
-  const { isLoading, data: songChoices } = trpc.useQuery(["get-song-choices"], {
+  const {
+    isLoading,
+    data: songChoices,
+    refetch,
+  } = trpc.useQuery(["get-song-choices"], {
     refetchOnMount: false,
   });
 
@@ -18,10 +21,6 @@ const Index: NextPage = () => {
   const [results, setResults] = useState<number[]>([]);
   const [numberOfVotes1, numberOfVotes2] = results;
   const [isVoteLoading, setVoteIsLoading] = useState<boolean>(false);
-
-  const onClickSkip = () => {
-    Router.reload();
-  };
 
   const resultDisplay = isVoteCompleted ? "block" : "hidden";
 
@@ -42,6 +41,11 @@ const Index: NextPage = () => {
         }
       );
     }
+  };
+
+  const onNextButtonClick = async () => {
+    await refetch();
+    setVoteCompleted(false);
   };
 
   if (isLoading || !songChoices) {
@@ -80,7 +84,7 @@ const Index: NextPage = () => {
           className={`${resultDisplay} absolute top-1/2 left-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2 text-center text-xl sm:text-xl text-white bg-scoop hover:bg-scoop-hover focus:outline-none focus:ring-2 focus:ring-gray-300 font-medium rounded-md px-4 py-2
           sm:top-2/3 sm:left-1/2  
          `}
-          onClick={onClickSkip}
+          onClick={onNextButtonClick}
         >
           Next
         </button>
