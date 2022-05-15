@@ -1,4 +1,4 @@
-export const DAY_IN_MS = 24 * 60 * 60 * 1000;
+export const REVALIDATE_TIME_IN_SECONDS = 4;
 
 export const TRPC_URL = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`

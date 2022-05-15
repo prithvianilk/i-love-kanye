@@ -1,6 +1,6 @@
 import GitHubButton from "react-github-btn";
 
-const GithubIcon = () => {
+const GithubIconButton = () => {
   return (
     <div className="pt-1 ml-10">
       <GitHubButton
@@ -14,4 +14,4 @@ const GithubIcon = () => {
   );
 };
 
-export default GithubIcon;
+export default GithubIconButton;

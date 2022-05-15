@@ -1,7 +1,7 @@
-import { Song } from "@prisma/client";
-import { GetServerSidePropsContext, NextPage } from "next";
+import { InferGetStaticPropsType } from "next";
 import Link from "next/link";
-import GithubIcon from "../components/GithubIcon";
+import GithubIcon from "../components/GithubIconButton";
+import { REVALIDATE_TIME_IN_SECONDS } from "../utils/constants";
 import { prisma } from "../utils/prisma";
 
 const getLeaderboard = async () => {
@@ -16,11 +16,9 @@ const getLeaderboard = async () => {
   });
 };
 
-interface LeaderboardProps {
-  songs: Song[];
-}
-
-const Leaderboard: NextPage<LeaderboardProps> = ({ songs }) => {
+function Leaderboard({
+  songs,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className="h-screen w-full flex flex-col text-white">
       <div className="grow">
@@ -50,13 +48,14 @@ const Leaderboard: NextPage<LeaderboardProps> = ({ songs }) => {
       </footer>
     </div>
   );
-};
+}
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export const getStaticProps = async () => {
   const songs = await getLeaderboard();
   return {
     props: { songs },
+    revalidate: REVALIDATE_TIME_IN_SECONDS,
   };
-}
+};
 
 export default Leaderboard;

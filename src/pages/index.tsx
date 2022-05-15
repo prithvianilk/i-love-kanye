@@ -2,19 +2,14 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import Router from "next/router";
 import { useState } from "react";
-import GithubIcon from "../components/GithubIcon";
+import GithubIcon from "../components/GithubIconButton";
 import SongChoice from "../components/SongChoice";
 import Spinner from "../components/Spinner";
-import { DAY_IN_MS } from "../utils/constants";
 import { trpc } from "../utils/trpc";
 
 const Index: NextPage = () => {
   const { isLoading, data: songChoices } = trpc.useQuery(["get-song-choices"], {
-    refetchOnWindowFocus: false,
     refetchOnMount: false,
-    refetchOnReconnect: false,
-    retry: false,
-    staleTime: DAY_IN_MS,
   });
 
   const voteForSongMutation = trpc.useMutation("vote-for-song");

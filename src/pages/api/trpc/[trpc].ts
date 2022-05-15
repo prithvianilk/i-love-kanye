@@ -3,7 +3,7 @@ import * as trpcNext from "@trpc/server/adapters/next";
 import { z } from "zod";
 import { prisma } from "../../../utils/prisma";
 
-const generateSongChoices = async () => {
+const generateRandomSongChoiceIds = async () => {
   const numberOfSongs = await prisma.song.count();
   const generateRandomIndex = () => Math.ceil(Math.random() * numberOfSongs);
   const firstIndex = generateRandomIndex();
@@ -18,11 +18,11 @@ export const appRouter = trpc
   .router()
   .query("get-song-choices", {
     async resolve() {
-      const randomChoices = await generateSongChoices();
+      const randomSongChoiceIds = await generateRandomSongChoiceIds();
 
       const songChoices = await prisma.song.findMany({
         where: {
-          id: { in: randomChoices },
+          id: { in: randomSongChoiceIds },
         },
       });
 
