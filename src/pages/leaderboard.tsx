@@ -21,20 +21,20 @@ function Leaderboard({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div className="h-screen w-full flex flex-col text-white">
-      <div className="grow">
+      <div className="grow overflow-y-auto">
         <h1 className="text-center my-10 text-4xl">Leaderboard</h1>
-        <table className="w-full text-center mt-4 table-fixed">
+        <table className="text-left sm:text-center w-full my-4">
           <thead>
             <tr className="text-xl sm:text-2xl">
-              <th>Title</th>
-              <th>Votes</th>
+              <th className="pl-8">Title</th>
+              <th className="w-1/4 sm:w-1/2">Votes</th>
             </tr>
           </thead>
           <tbody>
             {songs?.map(({ title, votes }, id) => (
               <tr key={`song-${id}`} className="text-md sm:text-xl">
-                <td>{title}</td>
-                <td>{votes}</td>
+                <td className="pl-8">{title}</td>
+                <td className="w-1/4 sm:w-1/2">{votes}</td>
               </tr>
             ))}
           </tbody>
