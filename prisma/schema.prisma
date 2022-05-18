@@ -9,7 +9,7 @@ datasource db {
 
 model Song {
   id    Int    @id @default(autoincrement())
-  title String @unique
+  title String
   album String
   votes Int
 }

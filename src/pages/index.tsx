@@ -13,6 +13,9 @@ const Index: NextPage = () => {
     refetch,
   } = trpc.useQuery(["get-song-choices"], {
     refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,  
+    retry: false,
   });
 
   const voteForSongMutation = trpc.useMutation("vote-for-song");
